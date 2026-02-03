@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Intro vueJS</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<h1>Mon appli en vue :)</h1>
+
+<div id="app">
+    <label for="firstNb">Nombre 1</label>
+    <input type="number" id="firstNb" v-model.number="nombre1">
+    <label for="lastNb">Nombre 2</label>
+    <input type="number" id="lastNb" v-model.number="nombre2">
+    <div>
+        <p>Opérations</p>
+        <p @click="calculateNb(nombre1, nombre2, '+')">+</p>
+        <p @click="calculateNb(nombre1, nombre2, '-')">-</p>
+        <p @click="calculateNb(nombre1, nombre2, '*')">*</p>
+        <p @click="calculateNb(nombre1, nombre2, '/')">/</p>
+    </div>
+    <p v-if="error" style="color:red">{{ error }}</p>
+    <p id="result">Résultat : {{ total }}</p>
+</div>
+<script>
+    const { createApp} = Vue;
+    createApp({
+        data(){
+            return {
+                nombre1: 0,
+                nombre2: 0,
+                total: 0,
+                error: '',
+            }
+        },
+        methods: {
+            calculateNb(nb1, nb2, operation) {
+                switch (operation) {
+                    case '+':
+                        this.total = nb1 + nb2;
+                        this.error = ''
+                        break;
+                    case '-':
+                        this.total = nb1 - nb2;
+                        this.error = ''
+                        break;
+                    case '*':
+                        this.total = nb1 * nb2;
+                        this.error = ''
+                        break;
+                    case '/':
+                        if (nb1 === 0 || nb2 === 0) {
+                            this.error = 'Erreur : division par zéro';
+                            break;
+                        }
+                        this.total = (nb1 / nb2).toFixed(2);
+                        break;
+                }
+            }
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>

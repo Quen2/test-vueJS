@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Intro vueJS</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <h1>Mon appli en vue :)</h1>
+
+    <div id="app">
+        <p>{{ message }}</p>
+        <div class="card">
+            <p v-bind:style="{ backgroundColor: estDisponible ? 'green' : 'red' }">JE SUIS LE BADGE</p>
+            <img :src="personne.photo" :alt="personne.prenom + ' ' + personne.nom" />
+            <p>{{ personne.nom.toUpperCase() }} - {{ personne.prenom}}</p>
+            <p>{{ personne.poste }}</p>
+            <p>{{ personne.email }} - {{ personne.phone }}</p>
+            <p>{{ personne.ville }}</p>
+        </div>
+        <div>
+            <h3>Compétences : {{ personne.competences.length}}</h3>
+            <ul>
+                <li v-for="competence in personne.competences" :key="competence">{{ competence }}</li>
+            </ul>
+        </div>
+        <div>
+            <h3>Réseaux Sociaux</h3>
+            <ul>
+                <li v-for="(lien, reseau) in reseauxSociaux" :key="reseau">
+                    <a v-bind:href="lien" v-bind:title="reseau" target="_blank">{{ reseau }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        const { createApp} = Vue;
+        createApp({
+            data(){
+                return {
+                    message: 'Hello Vue!',
+                    checkDisabled: true,
+                    personne: {
+                        nom: 'Guidez',
+                        prenom: 'Quentin',
+                        poste: 'Développeur Web',
+                        email: 'email@example.com',
+                        telephone: '01 23 45 67 89',
+                        photo: 'https://picsum.photos/seed/picsum/200/300',
+                        ville: 'Paris',
+                        competences: ['HTML', 'CSS', 'JavaScript', 'Vue.js'],
+                    },
+                    reseauxSociaux: {
+                        linkedin: 'https://linkedin.com',
+                        github: 'https://github.com',
+                        twitter: 'https://twitter.com'
+                    },
+                    estDisponible: true
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Intro vueJS</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<h1>Mon appli en vue :)</h1>
+
+<div id="app">
+    <p>{{ currentCitation }}</p>
+    <p>{{ indexCitation }}</p>
+    <p @click="generateCitation()">Générer une citation</p>
+    <p @click="nextCitation()">Citation suivante</p>
+</div>
+<script>
+    const { createApp} = Vue;
+    createApp({
+        data(){
+            return {
+                currentCitation: '',
+                indexCitation: '',
+                randomIndex: '',
+                citations: [
+                    { texte: "Le code est comme l'humour. Quand vous devez l'expliquer, c'est mauvais.", auteur: "Cory House" },
+                    { texte: "Tout le monde devrait apprendre à programmer, car cela vous apprend à penser.", auteur: "Steve Jobs" },
+                    { texte: "La perfection est atteinte non quand il ne reste rien à ajouter, mais quand il ne reste rien à enlever.", auteur: "Antoine de Saint-Exupéry" },
+                    { texte: "La simplicité est l'ultime sophistication.", auteur: "Léonard de Vinci" },
+                    { texte: "Apprendre à écrire des programmes étend votre esprit et vous aide à mieux penser.", auteur: "Bill Gates" },
+                    { texte: "Un bon programmeur est quelqu'un qui regarde des deux côtés avant de traverser une rue à sens unique.", auteur: "Doug Linder" },
+                    { texte: "D'abord, résolvez le problème. Ensuite, écrivez le code.", auteur: "John Johnson" },
+                    { texte: "L'expérience est le nom que chacun donne à ses erreurs.", auteur: "Oscar Wilde" }
+                ],
+                indexActuel: 0
+            }
+        },
+        methods: {
+            generateCitation() {
+                const randomIndex = Math.floor(Math.random() * this.citations.length);
+                this.indexCitation = randomIndex;
+                this.indexActuel = this.indexCitation;
+                const citation = this.citations[randomIndex];
+                this.indexCitation = 'Citation ' + (randomIndex + 1) + ' sur ' + this.citations.length;
+                this.currentCitation = `"${citation.texte}" - ${citation.auteur}`;
+            },
+            nextCitation() {
+                this.indexActuel = (this.indexActuel + 1) % this.citations.length;
+                const citation = this.citations[this.indexActuel];
+                this.indexCitation = 'Citation ' + (this.indexActuel + 1) + ' sur ' + this.citations.length;
+                this.currentCitation = `"${citation.texte}" - ${citation.auteur}`;
+            }
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>
